@@ -23,6 +23,6 @@ go build
 
 ```powershell
 cd src
-set GOOS=linux
+$Env:GOOS = 'linux'
 go build
 ```
