@@ -7,7 +7,7 @@ Mainly serves as training ground for learning [Go](https://go.dev/) language
 # Running
 
 ```powershell
-go run src\hello.go
+go run cmd\main.go
 ```
 
 # Building
@@ -15,14 +15,14 @@ go run src\hello.go
 ## Windows
 
 ```powershell
-cd src
+cd cmd
 go build
 ```
 
 ## Cross-compiling for Linux
 
 ```powershell
-cd src
+cd cmd
 $Env:GOOS = 'linux'
 go build
 ```
