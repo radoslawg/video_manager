@@ -13,9 +13,9 @@ var templateFiles embed.FS
 var StaticFiles embed.FS
 
 func Templates() *template.Template {
-	_templates, err := template.ParseFS(templateFiles, "templates/*")
+	templates, err := template.ParseFS(templateFiles, "templates/*")
 	if err != nil {
 		panic(fmt.Sprintf("Cannot parse templates: %v", err))
 	}
-	return _templates
+	return templates
 }
