@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
-	"video_manager/resources"
+
+	"github.com/radoslawg/video_manager/resources"
 )
 
 var templates *template.Template
