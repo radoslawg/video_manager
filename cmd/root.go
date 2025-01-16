@@ -14,7 +14,7 @@ var rootCmd = &cobra.Command{
 				  written in Go.
 				  Repository located at https://github.com/radoslawg/video-manager/`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// Do Stuff Here
+		cmd.Usage()
 	},
 }
 
