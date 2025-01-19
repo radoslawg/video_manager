@@ -1,8 +1,81 @@
 body {
-    background-color: #202040;
-    color: #FFFFA0
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
 }
 
 h1 {
     text-align: center;
+    color: #ffffff;
+    margin-top: 20px;
+}
+
+a {
+    color: #03a9f4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#playerdiv {
+    margin: 20px auto;
+    background-color: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 600px;
+}
+
+ul li {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e1e1e;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+ul li a {
+    color: #03a9f4;
+    padding: 5px 10px;
+    border-radius: 4px;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+ul li a:hover {
+    background-color: #03a9f4;
+    color: #121212;
+}
+
+.delete-link {
+    color: #f44336;
+}
+
+.delete-link:hover {
+    background-color: #f44336;
+    color: #fff;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #888;
+    font-size: 0.8em;
 }
