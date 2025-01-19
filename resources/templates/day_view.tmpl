@@ -4,8 +4,8 @@
     </head>
     <body>
         <h1>{{.FileName}}</h1>
-        <a href="/">Back to index</a>
         <center><div id="playerdiv"></div></center>
+        <center><a href="#" onclick='queuePlaylist()'>Start Playlist</a></center>
         <ul>
             {{range $index, $link := .Links}}
                 <li><a href="#" onclick='player.loadVideoById("{{$link}}", 0, "default")'>{{index $.Titles $index}}</a>
@@ -13,6 +13,8 @@
                 </li>
             {{end}}
         </ul>
+        <center><a href="/">Back to index</a></center>
+
         <script>
         var tag = document.createElement('script');
 
@@ -25,17 +27,31 @@
                 event.target.setPlaybackRate(2);
                 event.target.setPlaybackQuality("hd1080");
                 }
-            }
-            window.onYouTubeIframeAPIReady=function() {
-                    player = new YT.Player('playerdiv', {
-                        height: '80%',
-                        width: '90%',
-                        videoId: '{{index $.Links 0}}',
-                        events: {
-                            'onStateChange': onPlayerStateChange
-                        }
-                        });
+        }
+        function queuePlaylist() {
+            player.loadPlaylist([
+            {{range $index, $link := .Links}}
+                {{$link}},
+            {{end}}
+            ],
+                    0,
+                    0);
+        }
+        function onPlayerReady(event) {
+            queuePlaylist();
+        }
+        window.onYouTubeIframeAPIReady=function() {
+                player = new YT.Player('playerdiv', {
+                    height: '80%',
+                    width: '90%',
+                    videoId: '{{index $.Links 0}}',
+                    events: {
+                        'onReady': onPlayerReady,
+                        'onStateChange': onPlayerStateChange
                     }
+                    });
+                }
+                    
         </script>
 
     </body>
