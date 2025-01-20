@@ -28,7 +28,7 @@ jobs:
       run: go test -v ./...
 
   build-and-publish-head:
-    runs-on: alpine-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2.5.0 # Checking out the repo
