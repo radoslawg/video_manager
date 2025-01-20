@@ -1,6 +1,6 @@
 module github.com/radoslawg/video_manager
 
-go 1.23.4
+go 1.23.5
 
 require (
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
