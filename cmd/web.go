@@ -18,12 +18,14 @@ import (
 
 var port int16 = 8080
 var address string = ""
+var videosPath = "z:/youtube/!nextdaily"
 
 var templates *template.Template
 
 func init() {
 	webCmd.Flags().Int16VarP(&port, "port", "p", 8080, "Port number for web server")
 	webCmd.Flags().StringVarP(&address, "bind", "b", address, "Bind to address")
+	webCmd.Flags().StringVarP(&videosPath, "videos_path", "v", videosPath, "Path to videos")
 	rootCmd.AddCommand(webCmd)
 }
 
@@ -41,7 +43,10 @@ var webCmd = &cobra.Command{
 		server.Handle("/static/", http.FileServer(http.FS(resources.StaticFiles)))
 
 		fmt.Printf("Starting Web server on %v:%v\n", address, port)
-		http.ListenAndServe(fmt.Sprintf("%s:%d", address, port), server)
+		err := http.ListenAndServe(fmt.Sprintf("%s:%d", address, port), server)
+		if err != nil {
+			log.Fatalf("Failed to start web server: %v", err)
+		}
 	},
 }
 
@@ -52,12 +57,10 @@ type FileLinks struct {
 	Titles           []string
 }
 
-//const PATH = "/media/sda1/youtube/!nextdaily"
-
-const PATH = "z:/youtube/!nextdaily"
+//const videosPath = "/media/sda1/youtube/!nextdaily"
 
 func listFilesHandler(w http.ResponseWriter, r *http.Request) {
-	dir := PATH // Directory containing the files
+	dir := videosPath // Directory containing the files
 	files, err := os.ReadDir(dir)
 	if err != nil {
 		fmt.Println(err.Error())
@@ -81,7 +84,7 @@ func listFilesHandler(w http.ResponseWriter, r *http.Request) {
 func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := strings.TrimPrefix(r.URL.Path, "/view/")
 	fileName = filepath.Base(fileName) // Prevent directory traversal
-	dir := PATH                        // Directory containing the files
+	dir := videosPath                  // Directory containing the files
 
 	files, err := os.ReadDir(dir)
 	if err != nil {
@@ -142,7 +145,7 @@ func deleteLinkHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	view := parts[1]
-	dir := PATH
+	dir := videosPath
 	filePath := filepath.Join(dir, fileName)
 	log.Println(filePath)
 
