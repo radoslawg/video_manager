@@ -97,7 +97,7 @@ func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 	var original_filenames []string
 	var titles []string
 	for _, file := range files {
-		if !file.IsDir() && strings.HasSuffix(file.Name(), ".mkv") && strings.HasPrefix(file.Name(), fileName) {
+		if !file.IsDir() && (strings.HasSuffix(file.Name(), ".mkv") || strings.HasSuffix(file.Name(), ".mhtml")) && strings.HasPrefix(file.Name(), fileName) {
 			i := 2
 			ids := strings.Split(strings.TrimSpace(string(file.Name())), "#")
 			if len(ids[1]) == 8 {
