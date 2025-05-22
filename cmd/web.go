@@ -70,7 +70,7 @@ func listFilesHandler(w http.ResponseWriter, r *http.Request) {
 
 	var fileNames []string
 	for _, file := range files {
-		if !file.IsDir() && strings.HasSuffix(file.Name(), ".mkv") {
+		if !file.IsDir() && (strings.HasSuffix(file.Name(), ".mkv") || strings.HasSuffix(file.Name(), ".mhtml")) {
 			dates := strings.Split(strings.TrimSpace(string(file.Name())), "#")
 			if !slices.Contains(fileNames, dates[0]) {
 				fileNames = append(fileNames, dates[0])
