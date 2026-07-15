@@ -3,7 +3,25 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
-        <h1>{{.FileName}}</h1>
+        <div class="header-bar">
+            <h1>{{.FileName}}</h1>
+            <div class="speed-control">
+                <label for="speedSelect">Speed:</label>
+                <select id="speedSelect" onchange="onSpeedChange(this)">
+                    <option value="0.25">0.25x</option>
+                    <option value="0.5">0.5x</option>
+                    <option value="0.75">0.75x</option>
+                    <option value="1">1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="1.75">1.75x</option>
+                    <option value="2" selected>2x</option>
+                    <option value="2.25" selected>2.25x</option>
+                    <option value="2.5" selected>2.5x</option>
+                    <option value="4" selected>4</option>
+                </select>
+            </div>
+        </div>
         <center><div id="playerdiv"></div></center>
         <center><a href="#" onclick='queuePlaylist()'>Start Playlist</a></center>
         <ul>
@@ -22,9 +40,18 @@
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         var player;
+        var playbackRate = 2; // must match the "selected" option above
+
+        function onSpeedChange(select) {
+            playbackRate = parseFloat(select.value);
+            if (player) {
+                player.setPlaybackRate(playbackRate);
+            }
+        }
+
         function onPlayerStateChange(event) {
             if (event.data == YT.PlayerState.PLAYING ) {
-                event.target.setPlaybackRate(2);
+                event.target.setPlaybackRate(playbackRate);
                 event.target.setPlaybackQuality("hd1080");
                 }
         }
@@ -51,7 +78,7 @@
                     }
                     });
                 }
-                    
+
         </script>
 
     </body>

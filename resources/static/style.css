@@ -23,6 +23,53 @@ a:hover {
     text-decoration: underline;
 }
 
+.header-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.header-bar h1 {
+    margin: 0;
+}
+
+.speed-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.speed-control label {
+    color: #e0e0e0;
+    font-size: 0.9em;
+}
+
+#speedSelect {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    border: 1px solid #03a9f4;
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-family: inherit;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+#speedSelect:hover,
+#speedSelect:focus {
+    background-color: #03a9f4;
+    color: #121212;
+    outline: none;
+}
+
+#speedSelect option {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
 #playerdiv {
     margin: 20px auto;
     background-color: #000;
