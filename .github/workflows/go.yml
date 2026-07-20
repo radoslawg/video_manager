@@ -55,4 +55,5 @@ jobs:
       with:
         context: .
         push: true
+        provenance: false
         tags: ghcr.io/${{ steps.image.outputs.owner }}/video_manager:head
