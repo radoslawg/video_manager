@@ -127,7 +127,7 @@ func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 			i := 2
 			ids := strings.Split(strings.TrimSpace(string(file.Name())), "#")
 			if len(ids[1]) == 8 || len(ids[1]) == 14 {
-				_, err := strconv.ParseInt(ids[1], 10, 32)
+				_, err := strconv.ParseInt(ids[1], 10, 64)
 				if err == nil {
 					i = 3
 				}
