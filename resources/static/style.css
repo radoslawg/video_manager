@@ -127,6 +127,20 @@ ul li a:hover {
     color: #fff;
 }
 
+.delete-all-btn {
+    color: #f44336;
+    border: 1px solid #f44336;
+    border-radius: 4px;
+    padding: 5px 10px;
+    font-size: 0.9em;
+}
+
+.delete-all-btn:hover {
+    background-color: #f44336;
+    color: #fff;
+    text-decoration: none;
+}
+
 footer {
     text-align: center;
     margin-top: 20px;

@@ -41,6 +41,7 @@ var webCmd = &cobra.Command{
 		server.HandleFunc("/", listFilesHandler)
 		server.HandleFunc("/view/", viewFileHandler)
 		server.HandleFunc("/delete/", deleteLinkHandler)
+		server.HandleFunc("/delete-all/", deleteAllHandler)
 		server.Handle("/static/", http.FileServer(http.FS(resources.StaticFiles)))
 
 		fmt.Printf("Starting Web server on %v:%v\n", address, port)
@@ -203,4 +204,28 @@ func deleteLinkHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Redirect(w, r, "/view/"+view, http.StatusSeeOther)
+}
+
+func deleteAllHandler(w http.ResponseWriter, r *http.Request) {
+	fileName := strings.TrimPrefix(r.URL.Path, "/delete-all/")
+	fileName = filepath.Base(fileName) // Prevent directory traversal
+	dir := videosPath
+
+	files, err := os.ReadDir(dir)
+	if err != nil {
+		fmt.Println(err.Error())
+		http.Error(w, "Unable to read directory", http.StatusInternalServerError)
+		return
+	}
+
+	for _, file := range files {
+		if !file.IsDir() && strings.HasSuffix(file.Name(), ".mhtml") && strings.HasPrefix(file.Name(), fileName) {
+			filePath := filepath.Join(dir, file.Name())
+			if err := os.Remove(filePath); err != nil {
+				log.Println(err)
+			}
+		}
+	}
+
+	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
