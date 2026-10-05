@@ -153,8 +153,12 @@ func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 				original_filenames = append(original_filenames, file.Name())
 				links = append(links, ids[i])
 				titles = append(titles, strings.ReplaceAll(ids[i-1], "_", " "))
-				dates = append(dates, formatDate(ids[0]))
-				times = append(times, formatTime(ids[0]))
+				dateSource := ids[0]
+				if i == 3 {
+					dateSource = ids[1]
+				}
+				dates = append(dates, formatDate(dateSource))
+				times = append(times, formatTime(dateSource))
 			}
 		}
 	}
