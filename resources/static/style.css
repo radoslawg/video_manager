@@ -111,6 +111,12 @@ ul li a:hover {
     color: #121212;
 }
 
+.video-date {
+    color: #888;
+    padding: 5px 10px;
+    white-space: nowrap;
+}
+
 .delete-link {
     color: #f44336;
 }
