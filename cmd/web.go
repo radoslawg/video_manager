@@ -72,13 +72,25 @@ func listFilesHandler(w http.ResponseWriter, r *http.Request) {
 	for _, file := range files {
 		if !file.IsDir() && strings.HasSuffix(file.Name(), ".mhtml") {
 			dates := strings.Split(strings.TrimSpace(string(file.Name())), "#")
-			if !slices.Contains(fileNames, dates[0]) {
-				fileNames = append(fileNames, dates[0])
+			day := dateOnly(dates[0])
+			if !slices.Contains(fileNames, day) {
+				fileNames = append(fileNames, day)
 			}
 		}
 	}
 
 	templates.Lookup("index.tmpl").Execute(w, fileNames)
+}
+
+// dateOnly truncates a 14-digit dayKey (YYYYmmddhhMMss) to just its
+// 8-digit date portion (YYYYmmdd), so videos downloaded on the same
+// day at different times group together. 8-digit dayKeys pass through
+// unchanged.
+func dateOnly(dayKey string) string {
+	if len(dayKey) == 14 {
+		return dayKey[:8]
+	}
+	return dayKey
 }
 
 func viewFileHandler(w http.ResponseWriter, r *http.Request) {
