@@ -111,7 +111,8 @@ ul li a:hover {
     color: #121212;
 }
 
-.video-date {
+.video-date,
+.video-time {
     color: #888;
     padding: 5px 10px;
     white-space: nowrap;

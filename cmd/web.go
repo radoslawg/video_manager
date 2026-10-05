@@ -57,6 +57,7 @@ type FileLinks struct {
 	OriginalFileName []string
 	Titles           []string
 	Dates            []string
+	Times            []string
 }
 
 //const videosPath = "/media/sda1/youtube/!nextdaily"
@@ -106,6 +107,20 @@ func formatDate(dayKey string) string {
 	return t.Format("2006-01-02")
 }
 
+// formatTime renders the time-of-day portion of a 14-digit dayKey
+// (YYYYmmddhhMMss) as "HH:MM:SS", or "-" if the dayKey has no time
+// portion (8-digit dayKeys) or can't be parsed.
+func formatTime(dayKey string) string {
+	if len(dayKey) != 14 {
+		return "-"
+	}
+	t, err := time.Parse("20060102150405", dayKey)
+	if err != nil {
+		return "-"
+	}
+	return t.Format("15:04:05")
+}
+
 func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 	fileName := strings.TrimPrefix(r.URL.Path, "/view/")
 	fileName = filepath.Base(fileName) // Prevent directory traversal
@@ -122,6 +137,7 @@ func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 	var original_filenames []string
 	var titles []string
 	var dates []string
+	var times []string
 	for _, file := range files {
 		if !file.IsDir() && strings.HasSuffix(file.Name(), ".mhtml") && strings.HasPrefix(file.Name(), fileName) {
 			i := 2
@@ -137,6 +153,7 @@ func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 				links = append(links, ids[i])
 				titles = append(titles, strings.ReplaceAll(ids[i-1], "_", " "))
 				dates = append(dates, formatDate(ids[0]))
+				times = append(times, formatTime(ids[0]))
 			}
 		}
 	}
@@ -151,6 +168,7 @@ func viewFileHandler(w http.ResponseWriter, r *http.Request) {
 		OriginalFileName: original_filenames,
 		Titles:           titles,
 		Dates:            dates,
+		Times:            times,
 	}
 
 	w.Header().Set("Cache-Control", "no-cache, no-store, must-revalidate") // HTTP 1.1.
