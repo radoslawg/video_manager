@@ -139,7 +139,7 @@ func deleteLinkHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fileName, err := url.QueryUnescape(parts[0]) // Prevent directory traversal
+	fileName, err := url.PathUnescape(parts[0]) // Prevent directory traversal
 	if err != nil {
 		http.Error(w, "Unable to parse filename", http.StatusInternalServerError)
 		return
